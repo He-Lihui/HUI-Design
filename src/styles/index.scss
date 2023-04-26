@@ -1,0 +1,27 @@
+
+@import "variables.scss";
+
+@import "reboot.scss";
+
+
+
+// mixin
+@import "mixin.scss";
+
+// animation
+@import "animation.scss";
+
+// button
+@import "../components/Button/style/style";
+
+// alert 
+@import "../components/Alert/style/style";
+
+// menu
+@import "../components/Menu/styles/style";
+
+// tab
+@import "../components/Tabs/style/style";
+
+// icon
+@import "../components/Icon/style";

@@ -1,0 +1,45 @@
+
+.alert{
+    box-sizing: border-box;
+    overflow: hidden;
+    display: flex;
+    width: 100%;
+    text-align: left;
+    align-items: center;
+    line-height: 1.5715;
+    position: relative;
+    flex-direction: column;
+    align-items: flex-start;
+    @include alert-size($alert-padding-y,$alert-padding-x, 14px,$alert-border-radius);
+    .alert-message{
+        width: 100%;
+        position: relative;
+        font-weight: $font-weight-bold;
+    }
+    .alert-close-btn{
+        position: absolute;
+        right: 0;
+        top: 0;
+        cursor: pointer;
+    }
+    .alert-description{
+        font-size: $alert-description-font-size;
+        margin: $alert-description-top-margin 0 0;
+    }
+}
+    .alert-default {
+        @include alert-style($primary,$primary,$white)
+    }
+    .alert-warning {
+        @include alert-style($yellow,$yellow,$white)
+    }
+    .alert-success {
+        @include alert-style($green, $green, $white)
+    }
+    .alert-danger {
+        @include alert-style($red, $red, $white)
+    }
+
+    .isclose {
+        display: none;
+    }
