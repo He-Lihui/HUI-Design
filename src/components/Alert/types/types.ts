@@ -1,4 +1,4 @@
-import  { ReactNode } from "react";
+import  { ChangeEvent, ReactNode } from "react";
 
 export interface BaseAlertProps {
     type?: AlertType;
@@ -7,7 +7,8 @@ export interface BaseAlertProps {
     className?: string;
     showIcon?: boolean;
     description?: string
-    onClose? : Function
+    onClose? : Function;
+    onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export type AlertType  = 'success' | 'default' | 'danger' | 'warning';
