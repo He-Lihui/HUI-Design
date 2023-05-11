@@ -115,24 +115,24 @@ export const AutoComplete: React.FC<autoCompleteProps> = (props) => {
             animation="zoom-in-top"
             timeout={300}
             onExited={() => {setSuggestions([])}}
-          >
-            <ul className="suggestion-list">
-              { loading &&
-                <div className="suggstions-loading-icon">
-                  <Icon icon="spinner" spin/>
-                </div>
-              }
-              {suggestions.map((item, index) => {
-                const cnames = classNames('suggestion-item', {
-                  'is-active': index === higthLightIndex
-                })
-                return (
-                  <li key={index} className={cnames} onClick={() => handleSelect(item)}>
-                    {renderTemplate(item)}
-                  </li>
-                )
-              })}
-            </ul>
+          > 
+                <ul className="suggestion-list">
+                 { loading &&
+                   <div className="suggstions-loading-icon">
+                     <Icon icon="spinner" spin/>
+                   </div>
+                 }
+                 {suggestions.map((item, index) => {
+                   const cnames = classNames('suggestion-item', {
+                     'is-active': index === higthLightIndex
+                   })
+                   return (
+                     <li key={index} className={cnames} onClick={() => handleSelect(item)}>
+                       {renderTemplate(item)}
+                     </li>
+                   )
+                 })}
+               </ul>
           </Transition>
         )
       }
@@ -145,7 +145,7 @@ export const AutoComplete: React.FC<autoCompleteProps> = (props) => {
               onKeyDown={handleKeydown}
               {...restProps}
             />
-            {generateDropdown()}
+            { generateDropdown()}
         </div>
     ) 
 }

@@ -8,14 +8,12 @@ import Transition from "./components/Transition/transition";
 import { useState } from "react";
 import Button from "./components/Button/button";
 import Input from "./components/Input/input";
+import Upload from "./components/upload/upload";
 function App() {
 
   return (
     <div className="App">
       <header className="App-header">
-       <Input prefixes="123"icon={"search"}></Input>
-       <Input suffixes="456" size="lg" placeholder="1233"></Input>
-       <Input size="sm"></Input>
       </header>
     </div> 
   );
