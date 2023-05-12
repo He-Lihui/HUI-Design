@@ -1,6 +1,6 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
-import { ChangeEvent, InputHTMLAttributes, ReactElement } from "react";
+import { ChangeEvent, InputHTMLAttributes, ReactElement, RefObject } from "react";
 
 export type inputSize = 'lg' | 'sm'
 export interface InputProps extends Omit<InputHTMLAttributes<HTMLElement>,'size'>{
@@ -11,6 +11,7 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLElement>,'size'
     suffixes?: string | ReactElement;
     className?: string;
     onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+    ref?: RefObject<HTMLInputElement>
 }
 
 export interface DataSourceObject{
