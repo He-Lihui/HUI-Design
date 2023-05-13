@@ -3,7 +3,7 @@
       display: flex;
       align-items: center;
       margin-bottom: 25px;
-      &.-row-no-label {
+      &.row-no-label {
         flex-direction: row-reverse;
       }
       .form-item-label {
