@@ -2,7 +2,8 @@ import { ReactNode } from "react";
 
 export interface FormProps {
     name?: string;
-    children?: ReactNode
+    children?: ReactNode;
+    initialValues?: Record< string, any>
 }
 
 export interface FormItemProps {

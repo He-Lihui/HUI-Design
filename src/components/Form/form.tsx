@@ -2,18 +2,20 @@ import React from "react";
 import { FormProps } from "./types/types";
 import useStore from "./store/useStore";
  
-export type IFormContext =Pick <ReturnType<typeof useStore>, 'dispatch'| 'fields'>
+export type IFormContext =Pick <ReturnType<typeof useStore>, 'dispatch'| 'fields'> & Pick<FormProps,'initialValues'>
 export const FormContext = React.createContext<IFormContext>({} as IFormContext )
 export const Form: React.FC<FormProps> = (props) => { 
     const {
         name,
-        children
+        children,
+        initialValues
     } = props
     const {form, fields, dispatch}  = useStore()
 
     const passedContext: IFormContext = {
         dispatch,
-        fields
+        fields,
+        initialValues
     }
     return (
         <>

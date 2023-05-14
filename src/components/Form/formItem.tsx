@@ -15,11 +15,12 @@ const FormItem: React.FC<FormItemProps> = (props) => {
         'row-no-label': !label
     })
 
-    const { dispatch, fields} = useContext(FormContext)
+    const { dispatch, fields, initialValues} = useContext(FormContext)
     useEffect( () => {
-        dispatch({ type:'addField', name ,value:{ label, name, value: '' }})
+        const value = (initialValues && initialValues[name]) || ''
+        dispatch({ type:'addField', name ,value:{ label, name, value}})
     },[]) 
-    const fieldState = fields[name];
+    const fieldState = fields[name]; 
     const value = fieldState && fieldState.value
 
     const onValueUpdate = (e: any) => {

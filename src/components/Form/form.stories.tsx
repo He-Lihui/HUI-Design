@@ -22,7 +22,7 @@ export default formMeta
 
 export const DefaultForm: StoryFn<typeof Form> = (args) => {
     return(
-        <Form {...args}>
+        <Form {...args} initialValues={{ username: 'initial', password: 'initial'}}>
             <FormItem label="用户名" name="username">
                 <Input type="text"></Input>
             </FormItem>
