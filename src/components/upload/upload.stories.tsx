@@ -28,6 +28,7 @@ export const ASimpleUpload = (args: any) => (
   </Upload>  
 )
 ASimpleUpload.storyName = '普通的 Upload 组件'
+
 export const BCheckUpload = (args: any) => {
   const checkFileSize = (file: File) => {
     if (Math.round(file.size / 1024) > 50) {

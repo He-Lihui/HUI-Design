@@ -3,7 +3,7 @@
  import { Meta , StoryFn} from "@storybook/react";
 //  import mdx from "./button.mdx";
  const buttonMeta: Meta<typeof Button> = {
-    title: "Buttom",
+    title: "Button",
     component: Button,
     tags: ['autodocs'],
  }
