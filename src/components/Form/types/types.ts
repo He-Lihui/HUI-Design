@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-
+import Schema,{ RuleItem, ValidateError} from "async-validator";
 export interface FormProps {
     name?: string;
     children?: ReactNode;
@@ -13,14 +13,16 @@ export interface FormItemProps {
     valuePropName?: string;
     trigger?: string;
     getValueFromEvent?: (event: any) => any;
+    rules?: RuleItem[];
+    validTrigger?: string
 }
 
 export interface FieldDetail {
     name: string;
-    value: string;
-    rules: Array<any>;
+    value: string; 
+    rules: Array<RuleItem>;
     isValid: boolean;   // valid  [ˈvælɪd] adj. （文件或票证）有效的；正当的，合理的
-    errors: Array<any>;
+    errors: Array<ValidateError >;
 }
 
 export interface FieldsState {
@@ -32,7 +34,7 @@ export interface FromState {
 }
 
 export interface FieldAction {
-    type:'addField' | 'updateValue';
+    type:'addField' | 'updateValue' | 'updateValidateResult';
     name: string;
     value: any
 }

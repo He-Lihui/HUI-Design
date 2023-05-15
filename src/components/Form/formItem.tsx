@@ -2,6 +2,8 @@ import React, { FormEvent, ReactElement, useContext, useEffect }from "react";
 import { FormItemProps } from "./types/types";
 import classNames from "classnames";
 import { FormContext } from "./form";
+
+export type RequiredProps<T, K extends keyof T> = Required<Pick<T, K>> & Omit<T, K>
 const FormItem: React.FC<FormItemProps> = (props) => {
     const {
         label,
@@ -9,31 +11,50 @@ const FormItem: React.FC<FormItemProps> = (props) => {
         name,
         valuePropName,
         trigger,
-        getValueFromEvent
-    } = props
+        getValueFromEvent,
+        rules,
+        validTrigger
+    } = props as RequiredProps<FormItemProps, 'getValueFromEvent'|'trigger'|'valuePropName' | 'validTrigger'>
     const cls = classNames('row',{
         'row-no-label': !label
     })
 
-    const { dispatch, fields, initialValues} = useContext(FormContext)
+    const { dispatch, fields, initialValues, validateField} = useContext(FormContext)
     useEffect( () => {
         const value = (initialValues && initialValues[name]) || ''
-        dispatch({ type:'addField', name ,value:{ label, name, value}})
+        dispatch({ type:'addField', name ,value:{ label, name, value, rules}})
     },[]) 
+    // 从state中获取值
     const fieldState = fields[name]; 
     const value = fieldState && fieldState.value
+    const isRequired = rules?.some( rule => rule.required)
+    const err = fieldState && fieldState.errors
+    const hasError = err && err.length > 0
 
+    const labelCls = classNames({
+        'form-item-required': isRequired
+    })
+
+    const itemCls = classNames('form-item-control',{
+        'form-item-has-error': hasError
+    })
     const onValueUpdate = (e: any) => {
-       const value = getValueFromEvent && getValueFromEvent(e)
+       const value = getValueFromEvent(e)
        console.log('newvalue'+ value);
        dispatch({ type:'updateValue', name ,value})
     }
 
+    const onValueValidDate = async () => {
+        await validateField(name)
+    }
     const renderChildren = () => {
         // 手动创建属性列表
         const controlProps: Record<string, any> = {} 
         controlProps[valuePropName!] = value;
         controlProps[trigger!] = onValueUpdate
+        if(rules){
+            controlProps[validTrigger] = onValueValidDate
+        }
         // 获取第一个child节点
 
          const childList = React.Children.toArray(children)
@@ -63,12 +84,23 @@ const FormItem: React.FC<FormItemProps> = (props) => {
             {
                 label && 
                 <div className="form-item-label">
-                    <label title={label}>
+                    <label title={label} className={labelCls}>
                         {label}
                     </label>
                 </div>
             }
-            <div className="form-item">{renderChildren()}</div>
+            <div className="form-item">
+                <div className={itemCls}>
+                {renderChildren()}
+                </div>
+                { hasError && 
+                    <div className="form-item-explain">
+                        <span>
+                            {err[0].message}
+                        </span>
+                    </div>
+                }
+            </div>
         </div>
     )
 }
@@ -76,6 +108,7 @@ const FormItem: React.FC<FormItemProps> = (props) => {
 FormItem.defaultProps = {
     valuePropName : 'value',
     trigger: 'onChange',
-    getValueFromEvent: (e) => e.target.value
+    getValueFromEvent: (e) => e.target.value,
+    validTrigger: 'onBlur'
 }
 export default FormItem

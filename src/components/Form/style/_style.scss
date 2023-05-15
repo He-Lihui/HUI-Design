@@ -26,11 +26,11 @@
       .form-item { 
         flex-basis: 70%;
         position: relative;
-        .viking-input-wrapper {
+        .input-wrapper {
           margin-bottom: 0;
         }
         .form-item-has-error.form-item-control {
-          .viking-input-inner {
+          .input-inner {
             border: 1px solid $danger;
             &:focus {
               box-shadow: $input-focus-box-shadow-error;
