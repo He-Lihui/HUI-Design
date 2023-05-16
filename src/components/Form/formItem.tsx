@@ -27,7 +27,7 @@ const FormItem: React.FC<FormItemProps> = (props) => {
     // 从state中获取值
     const fieldState = fields[name]; 
     const value = fieldState && fieldState.value
-    const isRequired = rules?.some( rule => rule.required)
+    const isRequired = rules?.some( rule => (typeof rule !== "function") && rule.required)
     const err = fieldState && fieldState.errors
     const hasError = err && err.length > 0
 

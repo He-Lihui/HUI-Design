@@ -4,6 +4,7 @@ import Input from "../Input/input";
 import Button from "../Button/button";
 import FormItem from "./formItem";
 import { Meta , StoryFn} from "@storybook/react";
+import { CustomRule } from "./types/types";
 
 const formMeta: Meta<typeof Form> = {
    title: "Form",
@@ -20,6 +21,24 @@ const formMeta: Meta<typeof Form> = {
 export default formMeta
 
 
+const confirmRules: CustomRule[] = [
+    { type: 'string',required: true, min: 3, max: 8 },
+    ({ getFieldValue }) => ({
+      asyncValidator(rule, value) {
+        console.log('the value', getFieldValue('password'))
+        console.log(value)
+        return new Promise((resolve, reject) => {
+          if (value !== getFieldValue('password')) {
+            reject('The two passwords that you entered do not match!')
+          }
+          setTimeout(() => {
+            resolve()
+          }, 1000)
+        })
+  
+      }
+    })
+  ]
 export const DefaultForm: StoryFn<typeof Form> = (args) => {
     return(
         <Form {...args} initialValues={{ username: 'initial', password: 'initial'}}>
@@ -27,6 +46,9 @@ export const DefaultForm: StoryFn<typeof Form> = (args) => {
                 <Input type="text"></Input>
             </FormItem>
             <FormItem label="密码" name="password" rules={[{ type: 'string', required: true, max: 8, min: 3 }]}>
+                <Input type="password"></Input>
+            </FormItem>
+            <FormItem label="确认密码" name="confirmPwd" rules={confirmRules}>
                 <Input type="password"></Input>
             </FormItem> 
             <FormItem name="check" valuePropName="checked" getValueFromEvent={(e) => (e.target.checked)}>

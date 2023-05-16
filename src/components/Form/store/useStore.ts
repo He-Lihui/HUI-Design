@@ -1,5 +1,5 @@
 import React,{ useState, useReducer} from "react";
-import { FieldAction, FieldsState, FromState } from "../types/types";
+import { CustomRule, FieldAction, FieldsState, FromState } from "../types/types";
 import Schema, { ValidateError } from "async-validator";
 
 
@@ -31,10 +31,25 @@ function useStore () {
     const [form, setForm] = useState<FromState>({ isValid : true})
     const [fields, dispatch] = useReducer(fieldReducer,{})
 
+    const getFieldValue = (key: string) => {
+        return fields[key] && fields[key].value
+    }
+    const transfromRules = (rules : CustomRule[]) => {
+        return rules.map( (rule) => {
+            if( typeof rule === "function"){
+                const transRule = rule({getFieldValue})
+                return transRule
+            } else {
+                return rule
+            }
+        })
+    }
     const validateField = async (name: string) => {
         const { value , rules} = fields[name]
+
+        const newRules = transfromRules(rules)
         const desriptor = {
-            [name] : rules
+            [name] : newRules
         }
         const valueMap = {
             [name] : value
