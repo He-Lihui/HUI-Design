@@ -4,10 +4,14 @@ import Schema,{ RuleItem, ValidateError} from "async-validator";
 
 export type CustomRuleFunc = ({ getFieldValue }: any) => RuleItem
 export type CustomRule = RuleItem | CustomRuleFunc;
+
+export type renderProps = (form: FromState) => ReactNode
 export interface FormProps {
     name?: string;
-    children?: ReactNode;
-    initialValues?: Record< string, any>
+    children?: ReactNode | renderProps;
+    initialValues?: Record< string, any>;
+    onFinish?: (values: Record<string, any>) => void;
+    onFinifshFailed?: (value: Record<string, any>, error: Record<string, ValidateError[]> ) => void
 }
 
 export interface FormItemProps {
@@ -34,7 +38,9 @@ export interface FieldsState {
 }
 
 export interface FromState {
-    isValid: boolean
+    isValid: boolean;
+    isSubmiting: boolean;
+    errors: Record<string, ValidateError[]>; 
 }
 
 export interface FieldAction {
@@ -44,4 +50,9 @@ export interface FieldAction {
 }
 export interface FieldContext {
     action: FieldAction
+}
+
+export interface ValidtaeErrorType extends Error {
+    errors: Array<ValidateError>;
+    fields: Record<string, ValidateError[]>
 }

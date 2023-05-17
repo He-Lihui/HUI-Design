@@ -1,5 +1,5 @@
 import React, { FormEvent, ReactElement, useContext, useEffect }from "react";
-import { FormItemProps } from "./types/types";
+import { FormItemProps, ValidtaeErrorType } from "./types/types";
 import classNames from "classnames";
 import { FormContext } from "./form";
 
@@ -22,7 +22,7 @@ const FormItem: React.FC<FormItemProps> = (props) => {
     const { dispatch, fields, initialValues, validateField} = useContext(FormContext)
     useEffect( () => {
         const value = (initialValues && initialValues[name]) || ''
-        dispatch({ type:'addField', name ,value:{ label, name, value, rules}})
+        dispatch({ type:'addField', name ,value:{ label, name, value, rules: rules || [], error: err || [ ]}})
     },[]) 
     // 从state中获取值
     const fieldState = fields[name]; 
@@ -38,7 +38,7 @@ const FormItem: React.FC<FormItemProps> = (props) => {
     const itemCls = classNames('form-item-control',{
         'form-item-has-error': hasError
     })
-    const onValueUpdate = (e: any) => {
+    const onValueUpdate = (e: ValidtaeErrorType) => {
        const value = getValueFromEvent(e)
        console.log('newvalue'+ value);
        dispatch({ type:'updateValue', name ,value})

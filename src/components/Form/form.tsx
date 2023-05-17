@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { FormProps } from "./types/types";
 import useStore from "./store/useStore";
  
@@ -8,9 +8,11 @@ export const Form: React.FC<FormProps> = (props) => {
     const {
         name,
         children,
-        initialValues
+        initialValues,
+        onFinifshFailed,
+        onFinish
     } = props
-    const {form, fields, dispatch, validateField}  = useStore()
+    const {form, fields, dispatch, validateField, validateAllField}  = useStore()
 
     const passedContext: IFormContext = {
         dispatch,
@@ -18,11 +20,31 @@ export const Form: React.FC<FormProps> = (props) => {
         initialValues,
         validateField
     }
+
+    const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        e.stopPropagation()
+
+        const {isValid , errors ,values} = await validateAllField()
+        if(isValid && onFinish){
+            onFinish(values)
+        } else if (!isValid && onFinifshFailed){
+            onFinifshFailed(values, errors)
+        }  
+    }
+
+    let renderChildren: ReactNode;
+
+    if(typeof children === "function"){
+        renderChildren = children(form);
+    } else {
+        renderChildren = children
+    }
     return (
         <>
-             <form name={name} className="form">
+             <form name={name} className="form" onSubmit={submitForm}>
                 <FormContext.Provider value={passedContext}>
-                { children}
+                { renderChildren}
                 </FormContext.Provider>
              </form>
              <pre style={{whiteSpace: 'pre-wrap'}}>{JSON.stringify(fields)}</pre>
