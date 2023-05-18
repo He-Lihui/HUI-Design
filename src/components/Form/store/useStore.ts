@@ -28,7 +28,7 @@ function fieldReducer (state: FieldsState, action: FieldAction): FieldsState  {
 }
  
 function useStore (initialValues?: Record<string, any>) {
-    const [form, setForm] = useState<FromState>({ isValid : true, isSubmiting: false, errors: {}})
+    const [form, setForm] = useState<FromState>({ isValid : true, isSubmitting: false, errors: {}})
     const [fields, dispatch] = useReducer(fieldReducer,{})
 
     const getFieldValue = (key: string) => {
@@ -44,12 +44,12 @@ function useStore (initialValues?: Record<string, any>) {
     }
     const resetField = () => {
         if(initialValues){
-            each(initialValues, (name, value) => {
+            each(initialValues, (value, name) => {
                 if(fields[name]){
                     dispatch({ type:'updateValue', name, value})
                 }
             })
-        }
+        } 
     }
     const transfromRules = (rules : CustomRule[]) => {
         return rules.map( (rule) => {
@@ -97,7 +97,7 @@ function useStore (initialValues?: Record<string, any>) {
         const desriptor = mapValues(fields, item => transfromRules(item.rules))
         const validator = new Schema(desriptor)
          
-        setForm({...form,isSubmiting: true})
+        setForm({...form,isSubmitting: true})
 
         try {
             await validator.validate(valueMap)
@@ -117,7 +117,7 @@ function useStore (initialValues?: Record<string, any>) {
             })
         } 
         finally {
-            setForm({...form, isSubmiting: false, isValid, errors})
+            setForm({...form, isSubmitting: false, isValid, errors})
             return {
                 isValid,
                 errors,
@@ -131,7 +131,10 @@ function useStore (initialValues?: Record<string, any>) {
         dispatch,
         validateField,
         getFieldValue,
-        validateAllField
+        validateAllField,
+        getAllFieldValue,
+        setFieldValue,
+        resetField
     }
 }
 

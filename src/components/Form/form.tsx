@@ -1,10 +1,11 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, forwardRef, useImperativeHandle} from "react";
 import { FormProps } from "./types/types";
 import useStore from "./store/useStore";
  
 export type IFormContext =Pick <ReturnType<typeof useStore>, 'dispatch'| 'fields' | 'validateField'> & Pick<FormProps,'initialValues'>
 export const FormContext = React.createContext<IFormContext>({} as IFormContext )
-export const Form: React.FC<FormProps> = (props) => { 
+export type IFormRef = Omit<ReturnType<typeof useStore>,'dispatch'| 'fields' | 'validateField' | 'form'>
+export const Form = forwardRef<IFormRef, FormProps>((props, ref) => { 
     const {
         name,
         children,
@@ -12,15 +13,19 @@ export const Form: React.FC<FormProps> = (props) => {
         onFinifshFailed,
         onFinish
     } = props
-    const {form, fields, dispatch, validateField, validateAllField}  = useStore()
-
+    const {form, fields, dispatch, ...resProps}  = useStore(initialValues)
+    const {validateField, validateAllField } = resProps
     const passedContext: IFormContext = {
         dispatch,
         fields,
         initialValues,
         validateField
     }
-
+    useImperativeHandle(ref, () => {
+        return {
+            ...resProps
+        }
+    })
     const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         e.stopPropagation()
@@ -47,12 +52,10 @@ export const Form: React.FC<FormProps> = (props) => {
                 { renderChildren}
                 </FormContext.Provider>
              </form>
-             <pre style={{whiteSpace: 'pre-wrap'}}>{JSON.stringify(fields)}</pre>
-             <pre style={{whiteSpace: 'pre-wrap'}}>{JSON.stringify(form)}</pre>
         </>
        
     )
-}
+})
 Form.defaultProps = {
     name: 'Form'
 }

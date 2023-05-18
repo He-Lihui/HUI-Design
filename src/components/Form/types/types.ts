@@ -39,7 +39,7 @@ export interface FieldsState {
 
 export interface FromState {
     isValid: boolean;
-    isSubmiting: boolean;
+    isSubmitting: boolean;
     errors: Record<string, ValidateError[]>; 
 }
 
