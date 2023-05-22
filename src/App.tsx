@@ -9,6 +9,7 @@ import { useState } from "react";
 import Button from "./components/Button/button";
 import Input from "./components/Input/input";
 import Upload from "./components/upload/upload";
+import React from "react";
 function App() {
 
   return (

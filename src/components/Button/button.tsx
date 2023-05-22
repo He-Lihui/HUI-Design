@@ -1,5 +1,6 @@
 import classNames from "classnames"
 import { ReactElement } from "react"
+import React from "react"
 import { BaseButtonProps, ButtonType, ButtonProps } from "./types/type"
 /**
  * ## 按钮用于开始一个即时操作
