@@ -1,0 +1,20 @@
+.tree-node {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: #ffffff;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+    .tree-node-inner {
+        display: flex;
+        flex-direction: column;
+        .inner-context{
+            cursor: pointer;
+            padding-left: 10px;
+        }
+        .children{
+            padding-left: 20px;
+        }
+    }
+}

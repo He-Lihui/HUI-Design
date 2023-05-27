@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react'
 import { Upload } from './upload'
 import Button from '../Button/button'
 import Icon from '../Icon/Icon'
-import { any } from 'prop-types'
+
 
 export default { 
   title: 'Upload',

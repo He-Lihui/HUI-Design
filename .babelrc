@@ -1,0 +1,10 @@
+{
+    "presets": [
+        ["ES2015",{ "modules": false}]
+    ],
+    "plugins": [["component",[
+        {
+            "libraryName": "hui-react"
+        }
+    ]]]
+}

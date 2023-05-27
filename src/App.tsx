@@ -9,11 +9,17 @@ import { useState } from "react";
 import Button from "./components/Button/button";
 import Input from "./components/Input/input";
 import Upload from "./components/upload/upload";
+import Alert from "./components/Alert";
+import React from "react";
 function App() {
-
+  const handleClose = () => {
+    console.log('alert is close')
+  }
   return (
     <div className="App">
       <header className="App-header">
+        111
+        <Alert message="message" onClose={handleClose} closable></Alert>
       </header>
     </div> 
   );
