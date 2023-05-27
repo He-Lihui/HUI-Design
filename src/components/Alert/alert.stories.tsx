@@ -33,7 +33,6 @@ export const AlertType: StoryFn<typeof Alert> = () => (
 AlertType.storyName = "不同类型的弹框"
 
 export const closeAlert = Template.bind({});
-
 closeAlert.args = {
     closable : true
 }

@@ -8,7 +8,6 @@ export interface BaseAlertProps {
     showIcon?: boolean;
     description?: string
     onClose? : Function;
-    onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export type AlertType  = 'success' | 'default' | 'danger' | 'warning';
